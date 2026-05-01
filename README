@@ -1,0 +1,55 @@
+# Django Internet Shop Project
+
+## 📌 Описание проекта
+Учебный интернет-магазин на Django, создаваемый поэтапно в рамках курса.
+Проект предназначен для изучения основ веб-разработки и формирования портфолио.
+
+## Структура проекта
+Django_homework
+ - .venv
+catalog/
+    migrations
+    templates/
+        home.html
+        contacts.html
+    __init__.py
+    admin.py
+    apps.py
+    models.py
+    tests.py
+    urls.py
+    views.py
+
+config/
+    __init__.py
+    asgi.py
+    settings.py
+    urls.py
+    wsgi.py
+.gitignore
+main.py
+manage.py
+poetry.lock
+pyproject.toml
+README
+
+## 🚀 Технологии
+- Python 3.13
+- Django
+- HTML
+- Bootstrap
+- SQLite
+- Git / GitHub
+
+## ⚙️ Запуск проекта
+
+### 1. Активация виртуального окружения
+```bash
+source venv/bin/activate
+
+### Запуск сервера
+python manage.py runserver
+
+** 📨 Дополнительно
+
+На странице контактов реализована форма обратной связи с обработкой отправки данных.
