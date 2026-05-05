@@ -1,55 +1,111 @@
-# Django Internet Shop Project
+Django Internet Shop Project
 
-## 📌 Описание проекта
+📌 Описание проекта
+
 Учебный интернет-магазин на Django, создаваемый поэтапно в рамках курса.
 Проект предназначен для изучения основ веб-разработки и формирования портфолио.
 
-## Структура проекта
+Реализованы:
+
+каталог товаров
+категории
+админ-панель
+фикстуры и тестовые данные
+кастомная management-команда для загрузки тестовых данных
+страница контактов с моделью Contact (заполняется через админку)
+вывод последних товаров на главной странице
+
+📂 Структура проекта
 Django_homework
- - .venv
-catalog/
-    migrations
-    templates/
-        home.html
-        contacts.html
-    __init__.py
-    admin.py
-    apps.py
-    models.py
-    tests.py
-    urls.py
-    views.py
-
-config/
-    __init__.py
-    asgi.py
-    settings.py
-    urls.py
-    wsgi.py
+ ---.venv
+├── catalog/
+├── fixtures/
+│   ├── categories.json
+│   └── products.json
+ └── management/
+│       └── commands/
+│           └── load_test_data.py
+│   ├── migrations/
+│   ├── templates/
+│   │   ├── home.html
+│   │   └── contacts.html
+│   ├── admin.py
+│   ├── apps.py
+│   ├── models.py
+│   ├── tests.py
+│   ├── urls.py
+│   ├── views.py
+│
+├── config/
+│   ├── settings.py
+│   ├── urls.py
+│   ├── wsgi.py
+│   └── asgi.py
+│
+--static
+│.env
 .gitignore
-main.py
-manage.py
-poetry.lock
-pyproject.toml
-README
+├── manage.py
+├── README.md
 
-## 🚀 Технологии
-- Python 3.13
-- Django
-- HTML
-- Bootstrap
-- SQLite
-- Git / GitHub
+🚀 Технологии
+Python 3.13
+Django 6+
+HTML
+Bootstrap 5
+PostgreSQL / SQLite
+Git / GitHub
 
-## ⚙️ Запуск проекта
+⚙️ Запуск проекта
 
-### 1. Активация виртуального окружения
-```bash
+1. Активация виртуального окружения
 source venv/bin/activate
+2. Применение миграций
+python manage.py migrate
+3. Создание тестовых данных (кастомная команда)
+python manage.py load_test_data
 
-### Запуск сервера
+Команда:
+
+удаляет старые данные
+создаёт категории
+создаёт тестовые продукты
+4. Запуск сервера
 python manage.py runserver
+🧪 Тестовые данные
 
-** 📨 Дополнительно
+Можно также загрузить через фикстуры:
 
-На странице контактов реализована форма обратной связи с обработкой отправки данных.
+python manage.py loaddata categories.json
+python manage.py loaddata products.json
+
+🧠 Реализованный функционал
+📦 Главная страница
+отображает товары
+выводит в консоль последние 5 товаров:
+Product.objects.order_by("-created_at")[:5]
+
+📞 Страница контактов
+данные берутся из модели Contact
+редактируются через админку Django
+отображаются на странице /contacts/
+
+🛠 Админка
+Категории
+Продукты
+Контакты (Contact)
+
+📌 Дополнительно (задание со звездочкой)
+создана модель Contact
+реализована загрузка данных через админку
+реализована кастомная команда load_test_data
+добавлена выборка последних товаров на главной странице
+
+▶️ Как проверить работу проекта
+Открыть главную страницу:
+http://127.0.0.1:8000/
+Проверить консоль сервера → должны быть последние товары
+Открыть контакты:
+http://127.0.0.1:8000/contacts/
+Проверить админку:
+http://127.0.0.1:8000/admin/

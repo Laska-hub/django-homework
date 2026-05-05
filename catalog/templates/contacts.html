@@ -6,7 +6,6 @@
 
     <title>Skystore</title>
 
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
@@ -26,25 +25,32 @@
 </div>
 
 <div class="container">
+
     <div class="row text-start">
 
         <div class="col-lg-9 col-md-6 col-sm-12">
             <div class="card mb-4 box-shadow">
                 <div class="card-body">
-                    <table class="table table-striped">
-                        <tr>
-                            <td class="w-25">Страна</td>
-                            <td>USA</td>
-                        </tr>
-                        <tr>
-                            <td class="w-25">ИНН</td>
-                            <td>91-1144442</td>
-                        </tr>
-                        <tr>
-                            <td class="w-25">Адрес</td>
-                            <td>Redmond, WA</td>
-                        </tr>
-                    </table>
+
+                    {% if contact %}
+                        <table class="table table-striped">
+                            <tr>
+                                <td class="w-25">Email</td>
+                                <td>{{ contact.email }}</td>
+                            </tr>
+                            <tr>
+                                <td class="w-25">Телефон</td>
+                                <td>{{ contact.phone }}</td>
+                            </tr>
+                            <tr>
+                                <td class="w-25">Адрес</td>
+                                <td>{{ contact.address }}</td>
+                            </tr>
+                        </table>
+                    {% else %}
+                        <p>Контакты не заполнены</p>
+                    {% endif %}
+
                 </div>
             </div>
         </div>
@@ -83,9 +89,9 @@
         </div>
 
     </div>
+
 </div>
 
-<!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
