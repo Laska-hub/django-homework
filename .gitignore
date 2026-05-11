@@ -1,0 +1,34 @@
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+
+# Virtual environments
+venv/
+env/
+.venv/
+django-homework-py3.13/
+
+# IDE (PyCharm)
+.idea/
+
+# Django stuff
+*.log
+*.pot
+*.pyc
+
+# Database
+db.sqlite3
+*.sqlite3
+
+# Static files (если будешь собирать)
+staticfiles/
+
+# Environment variables
+.env
+.env.*
+
+# Mac system files
+.DS_Store
