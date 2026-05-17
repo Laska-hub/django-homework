@@ -1,12 +1,20 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container">
-        <a class="navbar-brand" href="{% url 'catalog:home' %}">Главная</a>
 
-        <div>
-            <a href="{% url 'catalog:contacts' %}" class="btn btn-outline-primary">
-                Контакты
+        <a class="navbar-brand" href="{% url 'catalog:product_list' %}">
+            Главная
+        </a>
+
+        <div class="navbar-nav">
+
+            <a href="{% url 'catalog:product_create' %}" class="btn btn-outline-primary">
+                Добавить товар
             </a>
+
         </div>
+
     </div>
 </nav>
+
+
 
