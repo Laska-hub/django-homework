@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+
+    <h1>{{ product.name }}</h1>
+
+    <p>
+        <strong>Описание:</strong>
+        {{ product.description }}
+    </p>
+
+    <p>
+        <strong>Цена:</strong>
+        {{ product.price }}
+    </p>
+
+    <p>
+        <strong>Статус:</strong>
+
+        {% if product.is_published %}
+            Опубликован
+        {% else %}
+            Не опубликован
+        {% endif %}
+    </p>
+
+    {% if product.owner %}
+        <p>
+            <strong>Владелец:</strong>
+            {{ product.owner.email }}
+        </p>
+    {% endif %}
+
+    {% if product.image %}
+        <img src="{{ product.image.url }}" width="300">
+    {% endif %}
+
+    <br><br>
+
+    {% if user == product.owner or perms.catalog.can_unpublish_product %}
+        <a
+            href="{% url 'catalog:product_update' product.pk %}"
+            class="btn btn-warning"
+        >
+            Редактировать
+        </a>
+    {% endif %}
+
+    {% if user == product.owner or perms.catalog.delete_product %}
+        <a
+            href="{% url 'catalog:product_delete' product.pk %}"
+            class="btn btn-danger"
+        >
+            Удалить
+        </a>
+    {% endif %}
+
+    <a
+        href="{% url 'catalog:product_list' %}"
+        class="btn btn-secondary"
+    >
+        Назад на главную
+    </a>
+
+</div>
+{% endblock %}
