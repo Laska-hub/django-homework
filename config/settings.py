@@ -27,6 +27,7 @@ INSTALLED_APPS = [
 ]
 
 
+# MIDDLEWARE
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -73,41 +74,46 @@ DATABASES = {
 }
 
 
-# VALIDATION
+# PASSWORD VALIDATION
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
-    },
+    {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
+    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
+    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
+    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
 ]
 
 
 # I18N
 LANGUAGE_CODE = "en-us"
-
 TIME_ZONE = "UTC"
-
 USE_I18N = True
-
 USE_TZ = True
 
 
 # STATIC
-STATIC_URL = "static/"
+STATIC_URL = "/static/"
 STATICFILES_DIRS = [BASE_DIR / "static"]
 
-# MEDIA (важно для задания)
+
+# MEDIA (ВАЖНО)
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
 
-# DEFAULT
+# DEFAULT AUTO FIELD
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+# =========================
+# REDIS CACHE (django-redis)
+# =========================
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        },
+        "TIMEOUT": 300,  # default TTL (5 минут)
+    }
+}
