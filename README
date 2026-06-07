@@ -1,111 +1,182 @@
-Django Internet Shop Project
+🛒 Django Internet Shop
 
-📌 Описание проекта
+Учебный backend-проект интернет-магазина на Django, разработанный поэтапно в рамках обучения backend-разработке.
 
-Учебный интернет-магазин на Django, создаваемый поэтапно в рамках курса.
-Проект предназначен для изучения основ веб-разработки и формирования портфолио.
-
-Реализованы:
-
-каталог товаров
-категории
-админ-панель
-фикстуры и тестовые данные
-кастомная management-команда для загрузки тестовых данных
-страница контактов с моделью Contact (заполняется через админку)
-вывод последних товаров на главной странице
+Проект демонстрирует работу с моделями, ORM, кешированием (Redis), кастомными management-командами, фикстурами и админ-панелью Django.
 
 📂 Структура проекта
 Django_homework
- ---.venv
 ├── catalog/
-├── fixtures/
-│   ├── categories.json
-│   └── products.json
- └── management/
-│       └── commands/
-│           └── load_test_data.py
-│   ├── migrations/
-│   ├── templates/
-│   │   ├── home.html
-│   │   └── contacts.html
-│   ├── admin.py
-│   ├── apps.py
 │   ├── models.py
-│   ├── tests.py
-│   ├── urls.py
 │   ├── views.py
+│   ├── urls.py
+│   ├── services.py
+│   └── templates/
 │
 ├── config/
 │   ├── settings.py
 │   ├── urls.py
-│   ├── wsgi.py
-│   └── asgi.py
 │
---static
-│.env
-.gitignore
+├── media/
+├── static/
 ├── manage.py
-├── README.md
+└── README.md
 
-🚀 Технологии
+🚀 Tech Stack
+
 Python 3.13
 Django 6+
-HTML
+PostgreSQL
+Redis (cache layer)
+HTML (templates)
 Bootstrap 5
-PostgreSQL / SQLite
+Django ORM
 Git / GitHub
+dotenv
 
-⚙️ Запуск проекта
+📦 Features
 
-1. Активация виртуального окружения
-source venv/bin/activate
-2. Применение миграций
-python manage.py migrate
-3. Создание тестовых данных (кастомная команда)
+🧱 Core functionality
+Каталог товаров
+Категории товаров
+Детальная страница продукта /products/<id>/
+Страница категории /category/<id>/
+Страница контактов /contacts/
+
+⚡ Performance
+Кеширование списка товаров по категории через Redis
+TTL кеша: 15 минут
+Ключи вида: category_<id>
+
+🗄 Data layer
+PostgreSQL database
+Модели:
+Category
+Product
+Contact
+
+🛠 Admin panel
+Управление товарами
+Управление категориями
+Управление контактами (Contact model)
+
+📥 Data import
+Фикстуры (categories.json, products.json)
+Кастомная management-команда:
 python manage.py load_test_data
 
-Команда:
+🧠 Architecture overview
+Models
+Category → группы товаров
+Product → товары с ценой, описанием и изображением
+Contact → справочная информация (страна, ИНН, адрес)
+Cache layer
+cache.get(f"category_{category_id}")
+cache.set(f"category_{category_id}", data, 60 * 15)
+Service layer
 
-удаляет старые данные
-создаёт категории
-создаёт тестовые продукты
-4. Запуск сервера
-python manage.py runserver
-🧪 Тестовые данные
+Логика выборки вынесена в services:
 
-Можно также загрузить через фикстуры:
+get_products_by_category(category_id)
+🖼 Media files (images)
+
+⚠️ В проекте используется ImageField:
+
+upload_to = "products/"
+
+Настройки:
+
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
+Development media serving
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+📌 Важно:
+
+изображения загружаются через Django admin
+папка media/products/ создаётся автоматически при загрузке файлов
+в текущем состоянии часть записей может ссылаться на отсутствующие файлы (это нормально для учебного проекта)
+
+🧪 Example data
+
+После загрузки фикстур:
 
 python manage.py loaddata categories.json
 python manage.py loaddata products.json
 
-🧠 Реализованный функционал
-📦 Главная страница
-отображает товары
-выводит в консоль последние 5 товаров:
-Product.objects.order_by("-created_at")[:5]
+или:
 
-📞 Страница контактов
-данные берутся из модели Contact
-редактируются через админку Django
-отображаются на странице /contacts/
+python manage.py load_test_data
+⚙️ Installation & Run
 
-🛠 Админка
-Категории
-Продукты
-Контакты (Contact)
+1. Clone repository
+git clone <repo-url>
+cd Django_homework
 
-📌 Дополнительно (задание со звездочкой)
-создана модель Contact
-реализована загрузка данных через админку
-реализована кастомная команда load_test_data
-добавлена выборка последних товаров на главной странице
+2. Create virtual environment
+python -m venv venv
+source venv/bin/activate
 
-▶️ Как проверить работу проекта
-Открыть главную страницу:
-http://127.0.0.1:8000/
-Проверить консоль сервера → должны быть последние товары
-Открыть контакты:
-http://127.0.0.1:8000/contacts/
-Проверить админку:
-http://127.0.0.1:8000/admin/
+or with Poetry:
+
+poetry install
+poetry shell
+
+3. Install dependencies
+pip install -r requirements.txt
+
+4. Environment variables
+
+Create .env file:
+
+SECRET_KEY=your_secret_key
+DEBUG=True
+
+DB_NAME=...
+DB_USER=...
+DB_PASSWORD=...
+DB_HOST=localhost
+DB_PORT=5432
+
+5. Migrations
+python manage.py migrate
+
+6. Create superuser
+python manage.py createsuperuser
+
+7. Run server
+python manage.py runserver
+🌐 Routes
+URL	Description
+/	Home page (latest products)
+/products/<id>/	Product detail
+/category/<id>/	Products by category (cached)
+/contacts/	Contacts page
+/admin/	Django admin
+⚠️ Known issues (dev state)
+Некоторые media/products/* файлы отсутствуют (данные из БД остались)
+Это не влияет на работу логики проекта
+Redis должен быть запущен локально
+Админка требует выполненных миграций (auth_user must exist)
+📌 What I learned
+Django ORM (filtering, relations, ForeignKey)
+Django views & templates
+URL routing & namespaces
+Redis caching integration
+Service layer separation
+Admin customization
+Media handling in Django
+Fixtures & data loading
+Custom management commands
+📈 Next improvements (roadmap)
+ Pagination for products
+ Product search
+ API (Django REST Framework)
+ Docker setup
+ Image validation & fallback placeholder
+ Better cache invalidation strategy
+ Unit tests coverage
+👤 Author
+
+Junior Django backend developer project
+Educational portfolio work
